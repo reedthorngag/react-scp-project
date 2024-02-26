@@ -1,6 +1,6 @@
 import React from 'react';
 
-import subjects from '../../data.js';
+import subjects from '../../data.json';
 import SCP_Subject from './scp-subject.js'
 import { Stack } from '@mui/material';
 
