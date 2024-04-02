@@ -19,7 +19,8 @@ services:
       dockerfile: ./Dockerfile
       target: base
     volumes:
-      - ./src:/app/src
+      - ./backend/src:/app/src
+      - ./react-app:/app/react-app
       - ./version.txt:/app/version.txt
       - ./logs:/app/logs
     environment:
@@ -41,7 +42,7 @@ services:
   scp-react-dev:
     build:
       context: react-app/
-      dockerfile: react-app/Dockerfile
+      dockerfile: ./DockerFile
       target: base
     volumes:
       - ./react-app:/app
