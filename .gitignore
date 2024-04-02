@@ -13,6 +13,9 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 .env
 
 package-lock.json
+node_modules
 
+*.crt
 *.key
-JWT_SECRET.key
+JWT_SECRET.*
+

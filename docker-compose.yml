@@ -2,18 +2,10 @@ version: '3.4'
 
 services:
   db:
-    image: postgres:latest
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 3s
-        max_attempts: 3
-        window: 120s
+    image: postgres:${DB_VER}
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - 5432:5432
     volumes:
       - ./data:/var/lib/postgresql/data
     healthcheck:
@@ -21,27 +13,46 @@ services:
       interval: 1s
       timeout: 10s
 
-  snowball:
+  scp-backend:
     build:
       context: .
       dockerfile: ./Dockerfile
       target: base
     volumes:
       - ./src:/app/src
-      - ./nodemon.json:/app/nodemon.json
-      - ./node_modules:/app/node_modules
-    #expose:
-      #- 3000
+      - ./version.txt:/app/version.txt
+      - ./logs:/app/logs
     environment:
-      ENV: dev
       DB_URL: postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_PATH}
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:80/ping"]
+      interval: 1s
+      timeout: 10s
     links:
       - db:database
     ports:
-      - 80:80
       - 443:443
-      #- 3000:3000
-    command: sh -c "npm run migrate && npm run dev"
+      - 80:80
+    command: sh -c "npm run ${ENV}"
+  
+  scp-react-dev:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: base
+    volumes:
+      - ./src:/app/src
+      - ./version.txt:/app/version.txt
+      - ./logs:/app/logs
+    environment:
+      DB_URL: postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_PATH}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 3000:3000
+    command: sh -c "npm run react-${ENV}"
+
