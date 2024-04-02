@@ -1,2 +1,18 @@
-/node_modules
-/package-lock.json
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# TypeScript cache
+*.tsbuildinfo
+
+.vscode
+.env
+
+package-lock.json
+
+*.key
+JWT_SECRET.key
