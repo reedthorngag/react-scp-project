@@ -3,7 +3,7 @@ import {createLogger, format, transports} from 'winston';
 import 'winston-daily-rotate-file';
 
 // constants
-import {LOG_LEVELS_MAP} from '../constant/logger';
+import {LOG_LEVELS_MAP} from '../constant/logger.js';
 
 const DATE_LOG_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 const ROTATION_LOG_FILE_DATE_PATTERN = 'YYYY-MM-DD';

@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
-import logger from './util/logger';
+import logger from './util/logger.js';
 import { PostType } from '@prisma/client';
-import postData from './mock_post_data';
+import postData from './mock_post_data.js';
 
 const start = new Date();
 const passwordHash = bcrypt.hashSync('5Tn67Znw4GE',10); // took ~183ms on a ryzen7 4800H @ 2.9GHz

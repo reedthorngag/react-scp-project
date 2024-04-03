@@ -1,4 +1,4 @@
-import logger from './logger';
+import logger from './logger.js';
 
 /**
  * gets an error page based off of the status code provided

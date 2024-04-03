@@ -1,28 +1,42 @@
 import express, { Router } from 'express';
 import {glob} from 'glob'
 import path from 'path';
-import logger from './util/logger';
-import Route from './types/route';
+import Logger from './util/logger.js';
+import Route from './types/route.js';
 
 //key index issue with types:so any
-const router:any = express.Router(); 
+const router:Router = express.Router(); 
 const routesList: Route[] = [];
 
-logger.info('Importing routes...')
+Logger.info('Importing routes...');
 
-glob.sync( 'src/routes/**/*.ts' ).forEach((file:string)=>{
-    routesList.push(...require(path.resolve(file)).default);
-});
+for (const file of (await glob.glob( './**/*.js', {cwd:"./build/ts_backend/routes"})))
+    routesList.push(...(await import('./routes/'+file)).default);
+
+routesList.sort((a:Route,b:Route) => a[0].localeCompare(b[0]));
 
 for (const [path,method,auth,handler] of routesList) {
-    logger.info(`Adding route: /api${path}`);
+    Logger.info(`Adding route: ${method.toUpperCase().padEnd(4)} ${path}`);
     try{
-        router[(method).toLowerCase()](path, authenticator.resolve(auth,handler));
-    }catch (e ){
-        logger.error(`Error adding route /api${path}, error:\n${e}`);
-    }   
+        //@ts-ignore
+        router[(method).toLowerCase()](path, global.authenticator.resolve(auth, async (req:any,res:any) => {
+            try {
+                res.setHeader('Cache-Control','no-store, no-cache');
+                res.setHeader('Pragma','no-cache');
+                await handler(req,res);
+            } catch (e) {
+                try {
+                    res.status(500).send('Internal server error.');
+                } catch (err) {}
+                Logger.error(`Route: ${method.toUpperCase().padEnd(4)} ${path}  Error:`);
+                Logger.error(e);
+            }
+        }));
+    }catch(e){
+        Logger.error(`Error adding route ${path}, error:\n${e}`);
+    }
 }
 
-logger.info("exporting router");
+Logger.info("exporting router");
 
-export default router as Router;
+export default router

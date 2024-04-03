@@ -1,5 +1,5 @@
 import Route from '../types/route';
-import logger from '../util/logger';
+import logger from '../util/logger.js';
 
 
 const exampleRoute:Route = ['/admin', 'GET', 'admin', async (req:any,res:any)=>{
