@@ -11,7 +11,7 @@
     "migrate": "npx prisma generate && npx prisma db push --accept-data-loss",
     "DEV": "npm run migrate && tsc-watch --onSuccess \"node .\"",
     "PROD": "npm run migrate && npm run react-build && npx tsc && node .",
-    "react-build": "cd react-app && npm run react-PROD"
+    "react-build": "cd react-app && npm run build"
   },
   "author": "",
   "license": "ISC",
