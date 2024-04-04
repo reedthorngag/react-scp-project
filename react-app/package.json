@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "react-DEV": "react-scripts start",
+    "react-DEV": "WATCHPACK_POLLING=true react-scripts start",
     "react-PROD": "exit 0",
     "build": "react-scripts build"
   },

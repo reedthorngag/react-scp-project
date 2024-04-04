@@ -98,7 +98,7 @@ const fetch_next:Route = ['/fetch/next', 'GET', 'none', async (req:any,res:any) 
             }
         });
 
-        res.status(200).contentType("json").send(JSON.stringify(posts));
+        res.status(200).contentType("json").send(JSON.stringify(posts,null,4));
 
     } catch (error:any) {
         if (error.code === 'P2023') {
