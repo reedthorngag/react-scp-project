@@ -4,7 +4,10 @@ import { Link as RouterLink } from 'react-router-dom';
 
 const Login = () => {
   return (
-    <h1>hi</h1>
+    <>
+    <h1>This hasnt been implemented yet!</h1>
+    <h3>It will be implemented for assessment 2...</h3>
+    </>
   )
 }
 

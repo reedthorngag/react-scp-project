@@ -1,0 +1,9 @@
+
+.nav {
+    color: rgb(95, 217, 251);
+}
+
+.link:hover {
+    cursor: pointer;
+    text-decoration: none;
+}

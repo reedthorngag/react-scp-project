@@ -23,7 +23,7 @@ export default () => {
         <>
         <br/><br/>
         <Stack direction={'column'} spacing={'3vh'} alignItems={'center'} sx={{marginBottom: '10vh'}}>
-            <h2>SCP subjects:</h2>
+            <h1>SCP subjects</h1>
             {subjects && subjects.map((subject) => <SCP_Subject subject={subject}/>)}
         </Stack>
         </>
