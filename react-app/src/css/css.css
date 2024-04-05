@@ -4,11 +4,22 @@ html, body {
     padding: 0;
     max-width: 100vw;
     overflow-x: hidden;
-    background-color: #181a1b;
+    background-color: #131516;
     color: #d8d4cf;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     font-weight: 400;
     font-style: normal;
 }
 
+::-webkit-scrollbar {
+    background-color: #202324;
+    color: #aba499;
+}
 
+::-webkit-scrollbar-thumb {
+    background-color: #454a4d;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: #181a1b;
+}

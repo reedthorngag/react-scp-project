@@ -1,8 +1,8 @@
 
 .scp_subject {
-    box-shadow: 0 0 0.4vw 0.1vw rgb(72, 175, 204);
+    box-shadow: 0 0 0.4vw 0.1vw rgb(42, 126, 150);
     border-radius: 1vw;
-    background: #20232a;
+    background: rgb(26, 28, 34);
     padding: 0 4vw;
     color: #d8d4cf;
 }
