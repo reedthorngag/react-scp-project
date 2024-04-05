@@ -19,18 +19,5 @@ app.set('etag', false);
 
 app.get('/hi/*.log',(req:any,res:any) => {res.send('hi')});//express.static('/app/logs'));
 
-// add admin protected log directory
-app.get('/logs/*.log',global.authenticator.resolve('admin', (req:any,res:any) => {
-    res.setHeader('Cache-Control','no-store, no-cache');
-    res.setHeader('Pragma','no-cache');
-
-    const file = `/app/logs/${req.params[0]}.log`;
-    if (fs.existsSync(file))
-        res.sendFile(file);
-    else
-        res.status(404).send('Log doesn\'t exist!');
-    
-}));
-
 
 export default app;
