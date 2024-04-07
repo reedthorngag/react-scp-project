@@ -10,7 +10,7 @@ export default () => {
     const [subjects, setData] = useState(null);
 
     useEffect(() => {
-    fetch(`http://localhost:443/api/fetch/next`)
+    fetch(process.env.BASE_URL+`/api/fetch/next`)
         .then(response => response.json())
         .then((data) => {
             setData(data);
