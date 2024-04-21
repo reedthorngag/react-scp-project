@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import {glob} from 'glob'
+import {glob} from 'glob';
 import path from 'path';
 import Logger from './util/logger.js';
 import Route from './types/route.js';
@@ -20,7 +20,7 @@ for (const [path,method,auth,handler] of routesList) {
     Logger.info(`Adding route: ${method.toUpperCase().padEnd(4)} /api${path}`);
     try{
         //@ts-ignore
-        router[(method).toLowerCase()](path, async (req:any,res:any) => {
+        router[(method).toLowerCase()](path, authenticator.resolve(auth,async (req:any,res:any) => {
             try {
                 res.setHeader('Cache-Control','no-store, no-cache');
                 res.setHeader('Pragma','no-cache');
@@ -32,7 +32,7 @@ for (const [path,method,auth,handler] of routesList) {
                 Logger.error(`Route: ${method.toUpperCase().padEnd(4)} ${path}  Error:`);
                 Logger.error(e);
             }
-        });
+        }));
     }catch(e){
         Logger.error(`Error adding route ${path}, error:\n${e}`);
     }
