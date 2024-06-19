@@ -1,12 +1,7 @@
-import bcrypt from 'bcryptjs';
 import logger from './util/logger.js';
 import { PostType } from '@prisma/client';
 import postData from './mock_post_data.js';
 
-const start = new Date();
-const passwordHash = bcrypt.hashSync('5Tn67Znw4GE',10); // took ~183ms on a ryzen7 4800H @ 2.9GHz
-const end = new Date();
-logger.info(`Time to hash: ${end.getMilliseconds()-start.getMilliseconds()}ms`); // yes, this is sometimes negative, I'm lazy
 
 export default function () {
 
@@ -27,37 +22,26 @@ export default function () {
 
         const UnknownUser = (await prismaClient.user.create({
             data: {
-                Name: 'UnknownUser',
-                DisplayName: 'Anonymous User',
+                UserID: 'Anonymous User',
                 Bio: '',
-                Dob: new Date(),
                 IsAdmin: false
             }
         })).UserID;
         const admin = (await prismaClient.user.create({
             data: {
-                Name: 'Admin',
-                DisplayName: 'Admin',
+                UserID: 'Admin',
                 Bio: '',
-                Dob: new Date(),
-                IsAdmin: false
+                IsAdmin: true
             }
         })).UserID;
 
         await prismaClient.loginInfo.create({
             data: {
-                Email:'admin',
-                Password:passwordHash,
+                GoogleID: '103765847665923698238',
+                FirstName: 'admin',
+                Email:'admin@admin.admin',
                 IsAdmin:true,
-                UserID: admin
-            }
-        });
-        await prismaClient.loginInfo.create({
-            data: {
-                Email:'unknownuser',
-                Password:passwordHash,
-                IsAdmin: false,
-                UserID: UnknownUser
+                UserID: "Admin"
             }
         });
 

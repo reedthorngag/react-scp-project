@@ -1,8 +1,8 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import fs from 'fs';
-import {Auth,Handler} from '../types/route';
-import getErrorPage from './error_pages';
-import logger from './logger';
+import {Auth,Handler} from '../types/route.js';
+import getErrorPage from './error_pages.js';
+import logger from './logger.js';
 
 /**
  * the authenticator class which handles everythig related to authentication, such as:
@@ -12,8 +12,8 @@ import logger from './logger';
  */
 class Authenticator {
     
-    private privateKey:string = fs.readFileSync(__dirname+'/../../JWT_SECRET.key','utf8');
-    private publicKey:string = fs.readFileSync(__dirname+'/../../JWT_SECRET.pub','utf8');
+    private privateKey:string = fs.readFileSync('./JWT_SECRET.key','utf8');
+    private publicKey:string = fs.readFileSync('./JWT_SECRET.pub','utf8');
 
     private algorithm:jwt.Algorithm = 'RS256';
 

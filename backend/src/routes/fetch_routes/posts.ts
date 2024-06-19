@@ -31,8 +31,7 @@ const fetch_post:Route = ['/fetch/post', 'GET', 'none', async (req:any,res:any) 
                 Rating:true,
                 Author: {
                     select: {
-                        UserID: true,
-                        DisplayName: true
+                        UserID: true
                     }
                 },
                 LastEdited:true,
@@ -88,8 +87,7 @@ const fetch_next:Route = ['/fetch/next', 'GET', 'none', async (req:any,res:any) 
                 Rating:true,
                 Author: {
                     select: {
-                        UserID: true,
-                        DisplayName: true
+                        UserID: true
                     }
                 },
                 LastEdited:true,

@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import { glob } from 'glob';
 import Logger from './util/logger.js';
 import fs from 'fs';
+import initGoogleOauth2 from './google_oauth2.js';
 
 const app = express();
 
@@ -30,5 +31,6 @@ app.get('/logs/*.log',global.authenticator.resolve('admin', (req:any,res:any) =>
     
 }));
 
+initGoogleOauth2(app);
 
 export default app;

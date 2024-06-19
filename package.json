@@ -16,13 +16,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^5.7.1",
+    "@prisma/client": "^5.15.1",
     "@types/passport": "^1.0.14",
     "@types/passport-google-oauth2": "^0.1.7",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "firebase-admin": "^12.1.1",
     "glob": "^10.2.7",
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.0",
@@ -43,7 +44,7 @@
     "@types/jsonwebtoken": "^9.0.2",
     "@types/validator": "^13.11.7",
     "nodemon": "^3.0.1",
-    "prisma": "^5.7.1",
+    "prisma": "^5.15.1",
     "tsx": "^4.7.0"
   }
 }

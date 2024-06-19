@@ -3,15 +3,13 @@ import Route from "../../types/route";
 
 const profile:Route = ['/profile','GET','required', async (req:any,res:any) => {
 
-    const auth = JSON.parse(Buffer.from(req.cookies.auth.split('.')[1],'base64').toString('ascii'));
-
-    const user = await prismaClient.user.findFirst({
+    const user = await prismaClient.user.findUnique({
         where: {
-            UserID:auth.UserID,
+            UserID:req.auth.UserID,
             IsDeleted:false
         },
         select: {
-            DisplayName:true,
+            UserID:true,
             Bio:true,
             CommentsScore:true,
             PostsScore:true,
@@ -20,7 +18,7 @@ const profile:Route = ['/profile','GET','required', async (req:any,res:any) => {
     });
 
     if (!user) {
-        res.status(500).send('User not found! (try login again)');
+        res.redirect("/createUserId");
         return;
     }
 

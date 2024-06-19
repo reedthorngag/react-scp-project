@@ -25,7 +25,7 @@ if (process.env.ENV === 'DEV')
     });
 else {
     var privateKey = fs.readFileSync('./privatekey.key' );
-    var certificate = fs.readFileSync('./certificate.crt' );  
+    var certificate = fs.readFileSync('./certificate.crt' );
     https.createServer({
         key: privateKey,
         cert: certificate

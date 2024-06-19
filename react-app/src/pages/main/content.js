@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 export default () => {   
  
     const [subjects, setData] = useState(null);
-
+    console.log(process.env);
     useEffect(() => {
     fetch((process.env.BASE_URL || '')+`/api/fetch/next`)
         .then(response => response.json())
