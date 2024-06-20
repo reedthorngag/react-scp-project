@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/nav.css';
 import logo from '../imgs/SCP-logo.png';
+import Profile from './profile.js'
 
 export default () => {
     return (
@@ -17,11 +18,7 @@ export default () => {
                         <div style={{fontSize:'3vmin',display:'inline-block', height:'100%', maxHeight:'100%',width:'fit-content',textAlign: 'center',paddingTop:'2vh',paddingLeft:'3%'}}>SCP Foundation</div>
                 </Link>
             </Box>
-            <Box className='logo' display='flex' justifyContent='flex-end' width="50%">
-                <Link to='/login' style={{color:'rgb(95, 217, 251)'}}>
-                    <p style={{fontSize: "3vh"}}>Login</p>
-                </Link>
-            </Box>
+            <Profile />
         </Stack>
         </>
     )

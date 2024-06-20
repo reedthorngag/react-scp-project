@@ -51,6 +51,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    environment:
+      - test=hello
     ports:
       - 3000:3000
     command: sh -c "npm run react-${ENV}"

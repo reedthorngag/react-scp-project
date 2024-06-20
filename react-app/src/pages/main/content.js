@@ -8,23 +8,29 @@ import { useState, useEffect } from "react";
 export default () => {   
  
     const [subjects, setData] = useState(null);
-    console.log(process.env);
+    const [update, setUpdated] = useState(true);
+
     useEffect(() => {
-    fetch((process.env.BASE_URL || '')+`/api/fetch/next`)
-        .then(response => response.json())
-        .then((data) => {
-            setData(data);
-        })
-        .catch((e) => {
-            console.error(`An error occurred: ${e}`)
-        });
-    }, []);
+        if (update) {
+            fetch((process.env.REACT_APP_API_URL || '')+`/api/fetch/next`)
+                .then(response => response.json())
+                .then((data) => {
+                    setData(null);
+                    setData(data);
+                })
+                .catch((e) => {
+                    console.error(`An error occurred: ${e}`)
+                }
+            );
+            setUpdated(false);
+        }
+    }, [update]);
     return (
         <>
         <br/><br/>
         <Stack direction={'column'} spacing={'3vh'} alignItems={'center'} sx={{marginBottom: '10vh'}}>
             <h1>SCP subjects</h1>
-            {subjects && subjects.map((subject) => <SCP_Subject subject={subject}/>)}
+            {subjects && subjects.map((subject) => <SCP_Subject subject={subject} setUpdated={setUpdated}/>)}
         </Stack>
         </>
     )

@@ -1,7 +1,10 @@
 import Route from "../../types/route";
 
 
-const profile:Route = ['/profile','GET','required', async (req:any,res:any) => {
+const profile:Route = ['/profile','GET','optional', async (req:any,res:any) => {
+
+    console.log(req.auth);
+    console.log(req.cookies)
 
     const user = await prismaClient.user.findUnique({
         where: {
