@@ -7,9 +7,17 @@ export default () => {
 
     const [profile, setProfile] = useState(null);
 
+
+    
     useEffect(()=> {
-        fetch((process.env.REACT_APP_API_URL || '')+`/api/profile`)
-            .then(response => response.json())
+        fetch((process.env.REACT_APP_API_URL || '')+`/api/profile`, {redirect:'manual'})
+            .then(response => {
+                if (response.status == 404 && response.json().error == 'user_not_created') {
+                    window.location.href = '/createUserId';
+                    return;
+                }
+                return response.json();
+            })
             .then((data) => {
                 setProfile(data);
             })

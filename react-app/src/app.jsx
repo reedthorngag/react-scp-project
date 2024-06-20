@@ -3,9 +3,9 @@ import { Routes, Route } from 'react-router-dom';
 
 import './css/css.css';
 
-import Nav from './sections/nav.js';
-import Test from './pages/test.js';
-import Main from './pages/main/main.js';
+import Nav from './sections/nav.jsx';
+import Test from './pages/test.jsx';
+import Main from './pages/main/main.jsx';
 
 export default function App() {
     return (

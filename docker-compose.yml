@@ -22,9 +22,9 @@ services:
       dockerfile: ./Dockerfile
       target: base
     volumes:
-      - ./node_modules:/app/node_modules
+      #- ./node_modules:/app/node_modules
       - ./backend/src:/app/src
-      - ./react-app:/app/react-app
+      - ./react-app/src:/app/react-app/src
       - ./version:/app/version
       - ./logs:/app/logs
     environment:

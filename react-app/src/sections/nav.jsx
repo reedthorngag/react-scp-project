@@ -3,7 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/nav.css';
 import logo from '../imgs/SCP-logo.png';
-import Profile from './profile.js'
+import Profile from './profile.jsx';
+
 
 export default () => {
     return (

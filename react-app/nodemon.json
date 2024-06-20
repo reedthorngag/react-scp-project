@@ -1,7 +1,8 @@
 {
     "verbose": true,
-    "watch": ["src/**/*.js"],
+    "watch": ["src/**/*.jsx"],
     "execMap":{
-        "js": "npm run build"
-    }
+        "js": "echo \"hello\" && yarn run build"
+    },
+    "usePolling": "legacy"
 }

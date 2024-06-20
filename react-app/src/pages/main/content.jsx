@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SCP_Subject from './scp-subject.js'
+import SCP_Subject from './scp-subject.jsx'
 import { Stack } from '@mui/material';
 import { useState, useEffect } from "react";
 
