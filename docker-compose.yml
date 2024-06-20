@@ -39,21 +39,4 @@ services:
       - 443:443
       - 80:80
     command: sh -c "npm run ${ENV}"
-  
-  scp-react-dev:
-    build:
-      context: react-app/
-      dockerfile: ./DockerFile
-      target: base
-    volumes:
-      - ./react-app:/app
-      - ./logs:/app/logs
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      - test=hello
-    ports:
-      - 3000:3000
-    command: sh -c "npm run react-${ENV}"
 

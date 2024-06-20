@@ -1,0 +1,7 @@
+{
+    "verbose": true,
+    "watch": ["src/**/*.js"],
+    "execMap":{
+        "js": "npm run build"
+    }
+}
