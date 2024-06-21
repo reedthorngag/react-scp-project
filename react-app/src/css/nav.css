@@ -7,3 +7,11 @@
     cursor: pointer;
     text-decoration: none;
 }
+
+.profile {
+    background-color: inherit;
+    color: rgb(95, 217, 251);
+    font-size: 2vw;
+    padding: 0 2vw;
+    border-radius: 1vw;
+}

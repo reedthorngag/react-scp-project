@@ -3,12 +3,15 @@ import React from 'react';
 import SCP_Subject from './scp-subject.jsx'
 import { Stack } from '@mui/material';
 import { useState, useEffect } from "react";
+import { Button } from '@mui/base';
+import '../../css/main.css';
 
 
 export default () => {   
  
     const [subjects, setData] = useState(null);
     const [update, setUpdated] = useState(true);
+    const [creatingNew, createNew] = useState(false);
 
     useEffect(() => {
         if (update) {
@@ -30,6 +33,8 @@ export default () => {
         <br/><br/>
         <Stack direction={'column'} spacing={'3vh'} alignItems={'center'} sx={{marginBottom: '10vh'}}>
             <h1>SCP subjects</h1>
+            <h3><Button className='button' onClick={() => createNew(true)}>Create new!</Button></h3>
+            {creatingNew && <SCP_Subject subject='new' setUpdated={setUpdated} />}
             {subjects && subjects.map((subject) => <SCP_Subject subject={subject} setUpdated={setUpdated}/>)}
         </Stack>
         </>

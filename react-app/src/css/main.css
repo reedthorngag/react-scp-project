@@ -11,5 +11,34 @@
     background: #282b34;
 }
 
+.textfield {
+    box-shadow: 0 0 0.2vw 0.1vw rgb(32, 106, 126);
+    background: rgb(58, 63, 78);
+    color: #d8d4cf;
+}
 
+.textarea {
+    box-shadow: 0 0 0.2vw 0.1vw rgb(32, 106, 126);
+    background: rgb(58, 63, 78);
+    color: #d8d4cf;
+}
+
+.button {
+    box-shadow: 0 0 0.2vw 0.1vw rgb(32, 106, 126);
+    background: rgb(27, 30, 42);
+    color: #d8d4cf;
+    border-radius: 2vw;
+    margin: 2vh 2vw;
+    padding: 0.5vh 2vw;
+    width: fit-content;
+}
+
+.button:hover {
+    box-shadow: 0 0 0.3vw 0.1vw rgb(32, 106, 126);
+    background: rgb(50, 56, 79);
+}
+
+.small-margin {
+    margin: 0.5vh;
+}
 

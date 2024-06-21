@@ -4,6 +4,7 @@ import passport from 'passport';
 import Google from 'passport-google-oauth2';
 import V from 'validator';
 import getErrorPage from './util/error_pages.js';
+import crypto from 'crypto';
 
 const GoogleStrategy = Google.Strategy;
 
@@ -42,16 +43,21 @@ function initGoogleOauth2(app:Express) {
         console.log(user);
 
         if (!user) {
-            await prismaClient.loginInfo.create({
+            const id = crypto.randomBytes(16).toString('hex');
+            const createdUser = await prismaClient.loginInfo.create({
                 data: {
                     GoogleID: profile.id,
                     Email: profile.email,
                     FirstName: profile.given_name,
+                    UserID: id
                 }
             });
             profile['noUserID'] = true;
+            profile['UserID'] = createdUser?.UserID;
             return done(null, profile);
         }
+        
+
 
         if (user?.User?.IsBanned) {
             return done(null, false);
@@ -81,8 +87,8 @@ function initGoogleOauth2(app:Express) {
             res.send(`
                 <html>
                     <script>
-                        document.cookie = 'auth=${authenticator.createToken(profile.id,profile.isAdmin)}; max-age='+(60*60*24*5)+'; path=/; Samesite=Strict; Secure;';
-                        window.location.href = '${profile.noUserID?'/createUserID':process.env.SUCCESS_REDIRECT}';
+                        document.cookie = 'auth=${authenticator.createToken(profile.UserID,profile.isAdmin)}; max-age='+(60*60*24*5)+'; path=/; Samesite=Strict; Secure;';
+                        window.location.href = '${profile.noUserID?'/updateUserID':process.env.SUCCESS_REDIRECT}';
                     </script>
                 </html>
             `);

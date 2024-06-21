@@ -1,10 +1,21 @@
-import { Box, Button, Stack, Toolbar, TextField, Grid, TextArea } from '@mui/material';
+import { Box, Button, Stack, Toolbar, TextField, Grid, TextArea, TextareaAutosize } from '@mui/material';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useState, useRef } from "react";
 import '../../css/main.css';
 
 export default (props) => {
+
+    let newSubject = false;
+    if (props.subject == 'new') {
+        newSubject = true;
+        props.subject = {
+            Title: '',
+            Class: '',
+            Description: '',
+            Body: '\nThe next line is replaced with the description, don\'t change it:\n${Description}\n'
+        }
+    }
 
     const [subject, setSubject] = useState(structuredClone(props.subject));
     const [content, setContent] = useState(subject.Description);
@@ -13,6 +24,8 @@ export default (props) => {
     const [editing, setEditing] = useState(false);
     const [deleted, setDeleted] = useState(false);
     const [updated, markUpdated] = useState(false);
+
+    if (newSubject) setEditing(true);
 
     const [value,triggerUpdate] = useState(0);
     const update = () => triggerUpdate(value + 1);
@@ -31,9 +44,9 @@ export default (props) => {
 
     useEffect(() => {
         if (updated) {
-            fetch((process.env.REACT_APP_API_URL || '')+`/api/posts/${subject.PostID}/update`,
+            fetch((process.env.REACT_APP_API_URL || '')+`/api/posts/${newSubject? 'create' : subject.PostID+'/update'}`,
                     {
-                        method:post,
+                        method: 'POST',
                         headers:{"Content-Type":"application/json"},
                         body: JSON.stringify(subject)
                     })
@@ -60,7 +73,7 @@ export default (props) => {
         setDeleted(true);
     }
 
-    return !editing ? (
+    return !editing && !newSubject ? (
         <>
         <Stack className="scp_subject" onClick={()=>{if (!scroll.active) setScrollPos({value: window.scrollY,active:true}); setContent(subject.Body.replace('${description}',subject.Description).replaceAll('\n','<br/>'))}}
                 onMouseLeave={()=>{setContent(subject.Description.replaceAll('\n','<br/>'));setBackground("#00000030");
@@ -82,21 +95,30 @@ export default (props) => {
         ) : 
         (
         <>
-        <Stack className="scp_subject" onClick={()=>{if (!scroll.active) setScrollPos({value: window.scrollY,active:true}); setContent(subject.Body.replace('${description}',subject.Description).replaceAll('\n','<br/>'))}}
-                onMouseLeave={()=>{setContent(subject.Description.replaceAll('\n','<br/>'));setBackground("#00000030");
-                    if (scroll.active) {window.scrollTo(0,scroll.value); scroll.active = false}
-                }}
+        <Stack className="scp_subject"
                 onMouseEnter={()=>{setBackground("#00000045");}}
-                direction={'column'} width={'80vw'} alignItems={'center'}>
+                direction={'column'} width={'80vw'} alignItems={'left'} paddingLeft={'2vw'}>
             <Grid container direction='row' justifyContent='space-between' alignItems='center'>
-                <TextField className='editBox' value={subject.Title} onChange={(e)=>updateSubject(e,'Title')}></TextField>
+                <Stack direction='row'>
+                    <h3>Title: </h3>
+                    <Box display='flex' justifyContent={'center'} alignItems={'center'} paddingLeft={'3%'}>
+                        <TextField className='textfield' sx={{ input: { color: '#d8d4cf' } }} size='small' value={subject.Title} onChange={(e)=>updateSubject(e,'Title')}></TextField>
+                    </Box>
+                </Stack>
                 <Stack direction='row'>
                     <Button onClick={()=>saveEdits()}>Save</Button>
                     <Button onClick={()=>cancelEdit()}>Cancel</Button>
                 </Stack>
             </Grid>
-            <h4><b>Class: </b><TextField>{subject.Class}</TextField></h4><br/>
-            <p dangerouslySetInnerHTML={{__html: content}}></p>
+            <h4><b>Class: </b></h4>
+            <Grid container direction='row' justifyContent='space-between' alignItems='left'>
+                <TextField className='textfield' sx={{ input: { color: '#d8d4cf' } }} size='small' value={subject.Class} onChange={(e)=>updateSubject(e,'Class')}></TextField>
+            </Grid>
+            <h4>Description:</h4>
+            <TextareaAutosize className='textarea' minRows={3} value={subject.Description} onChange={(e)=>updateSubject(e,'Description')}></TextareaAutosize>
+            <h4>Body:</h4>
+            <TextareaAutosize className='textarea' minRows={5} value={subject.Body} onChange={(e)=>updateSubject(e,'Body')}></TextareaAutosize>
+            <br/><br/>
         </Stack>
         </>
         )

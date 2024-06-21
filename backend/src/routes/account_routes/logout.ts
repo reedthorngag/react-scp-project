@@ -1,7 +1,8 @@
 import Route from '../../types/route';
 
-const logout:Route = ['/logout','ALL','required',(req:any,res:any)=>{
-    authenticator.invalidate(req.cookies.auth);
+const logout:Route = ['/logout','ALL','none',(req:any,res:any)=>{
+    if (req.cookies.auth)
+        authenticator.invalidate(req.cookies.auth);
     res.redirect('/');
 }];
 

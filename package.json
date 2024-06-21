@@ -9,7 +9,7 @@
   },
   "scripts": {
     "migrate": "npx prisma generate && npx prisma db push --accept-data-loss",
-    "DEV": "npm run migrate && concurrently \"tsc-watch --onSuccess 'node .'\" \"cd react-app && nodemon\"",
+    "DEV": "npm run migrate && npm run react-build && tsc-watch --onSuccess 'node .'",
     "PROD": "npm run migrate && npm run react-build && npx tsc && node .",
     "react-build": "cd react-app && npm run build"
   },

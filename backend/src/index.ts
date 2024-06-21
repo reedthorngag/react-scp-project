@@ -8,6 +8,7 @@ import http from 'http';
 import fs from 'fs';
 import express from 'express';
 import local_router from './local_routes.js';
+import path from 'path';
 
 mock_data();
 
@@ -16,6 +17,14 @@ mock_data();
 const port: number = 443;
 
 app.use('/api',router);
+
+app.use((req, res, next) => {
+    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    res.header('Expires', '-1');
+    res.header('Pragma', 'no-cache');
+    res.sendFile(path.resolve('./src/public/index.html'));
+});
+
 const local_app = express().use('/',local_router);
 
 if (process.env.ENV === 'DEV')

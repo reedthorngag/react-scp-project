@@ -2,8 +2,10 @@ import Route from '../../types/route';
 import logger from '../../util/logger.js';
 
 
-const exampleRoute:Route = ['/', 'GET', 'admin', async (req:any,res:any)=>{
-    res.status(200).send('Hello admin user!');
+const exampleRoute:Route = ['/api/posts/create', 'GET', 'required', async (req:any,res:any)=>{
+    
+
+    
 }];
 
 //put all the routes in an array, and export that array.
