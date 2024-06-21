@@ -47,7 +47,7 @@ services:
       - 8080:8080
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@brodycooper.com
-      - PGADMIN_DEFAULT_PASSWORD=dgfG7DCp7PzJW
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
     depends_on:
       db:
         condition: service_healthy

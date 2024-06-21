@@ -109,7 +109,7 @@ n = start
 while (n<start+count):
     try:
         s = scrape_scp(scp)
-        r = requests.post("http://localhost:443/api/posts/create",json={
+        r = requests.post("https://scp-project.brodycooper.com/api/posts/create",json={
                     "Title":s["id"],
                     "Class":s["class"],
                     "Description":s["description"],
