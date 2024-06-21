@@ -13,7 +13,7 @@ export default (props) => {
             Title: '',
             Class: '',
             Description: '',
-            Body: '\nThe next line is replaced with the description, don\'t change it:\n${Description}\n',
+            Body: '',
             New: true
         }
     }

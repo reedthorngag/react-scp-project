@@ -44,6 +44,12 @@ function initGoogleOauth2(app:Express) {
 
         if (!user) {
             const id = crypto.randomBytes(16).toString('hex');
+            await prismaClient.user.create({
+                data: {
+                    UserID: id,
+                    Bio: ''
+                }
+            });
             const createdUser = await prismaClient.loginInfo.create({
                 data: {
                     GoogleID: profile.id,

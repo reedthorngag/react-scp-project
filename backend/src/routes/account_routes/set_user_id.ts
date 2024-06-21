@@ -17,10 +17,11 @@ const profile:Route = ['/setUserId','POST','required', async (req:any,res:any) =
     });
 
     if (user) {
-        req.status(403).contentType('json').send('{"error":"user_id_taken"}');
+        res.status(403).contentType('json').send('{"error":"user_id_taken"}');
         return;
     }
 
+    // this also changes the UserID for LoginInfo
     user = await prismaClient.user.update({
         data: {
             UserID: req.body.UserID
@@ -55,15 +56,6 @@ const profile:Route = ['/setUserId','POST','required', async (req:any,res:any) =
         },
         where: {
             AuthorID: req.auth.userID
-        }
-    });
-
-    await prismaClient.loginInfo.update({
-        data: {
-            UserID: req.body.UserID
-        },
-        where: {
-            UserID: req.auth.userID
         }
     });
 

@@ -10,7 +10,7 @@ import express from 'express';
 import local_router from './local_routes.js';
 import path from 'path';
 
-mock_data();
+if (process.env.ENV == 'DEV') mock_data();
 
 // NOTE: prismaClient and authenticator are global variables, be careful not to overwrite them (declared in preinitilization.ts)
 

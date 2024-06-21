@@ -37,7 +37,7 @@ export default (props) => {
         <br/><br/>
         <Stack direction={'column'} spacing={'3vh'} alignItems={'center'} sx={{marginBottom: '10vh'}}>
             <h1>SCP subjects</h1>
-            <Button className='button' onClick={() => createNew(true)}><h3>Create new!</h3></Button>
+            <Button className='button' onClick={() => {props.profile ? createNew(true) : window.location.href = '/auth/google';}}><h3>Create new!</h3></Button>
             {creatingNew && <SCP_Subject subject='new' setUpdated={setUpdated} profile={props.profile}/>}
             {subjects && subjects.map((subject) => <SCP_Subject subject={subject} setUpdated={setUpdated} profile={props.profile}/>)}
         </Stack>

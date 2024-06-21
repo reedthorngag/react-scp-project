@@ -60,8 +60,6 @@ export default function () {
             }
         });
 
-        return;
-
         for (const post of postData) {
             await prismaClient.post.create({
                 data: {

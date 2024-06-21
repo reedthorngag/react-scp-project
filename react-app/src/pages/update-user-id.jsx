@@ -48,6 +48,7 @@ export default () => {
     return (
         <>
             <Stack direction={'column'} spacing={'3vh'} alignItems={'center'} sx={{marginBottom: '10vh'}}>
+                <br/>
                 <h2>Choose your new user ID</h2>
                 <Stack>
                     <TextField className='textfield' sx={{ input: { color: '#d8d4cf' } }} onChange={(e)=>setId(e.target.value)}></TextField>
