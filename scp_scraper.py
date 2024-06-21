@@ -103,27 +103,23 @@ start = 2
 count = 30
 scp = start
 
-r = requests.post("https://30076323.2023.labnet.nz/php_scp_project/src/php/login.php",data=[("email","admin"),("pass",input("enter password: "))])
-
-print(str(r.status_code))
-php_sess_id = r.headers['Set-Cookie'].split(';')[0].split('=')[1]
+auth_cookie = input("Enter auth cookie to use: ");
 
 n = start
 while (n<start+count):
     try:
         s = scrape_scp(scp)
-        r = requests.post("https://30076323.2023.labnet.nz/php_scp_project/src/php/create_subject.php",data=[
-                    ("subject",s["id"]),
-                    ("class",s["class"]),
-                    ("image","a"),
-                    ("description",s["description"]),
-                    ("containment_info",s["containment"])],headers={"content-type":"application/x-www-form-urlencoded"},
-                        cookies={"PHPSESSID":php_sess_id})
+        r = requests.post("http://localhost:443/api/posts/create",json={
+                    "Title":s["id"],
+                    "Class":s["class"],
+                    "Description":s["description"],
+                    "Body":s["containment"]},headers={"content-type":"application/json"},
+                        cookies={"auth":auth_cookie})
         print(r.status_code)
         print(r.content)
         n += 1
     except:
-        pass
+        print('error!');
     scp += 1
 
 print(f"Dictionary written to db successfully.")

@@ -76,7 +76,7 @@ export default (props) => {
 
     return !editing && !subject.New ? (
         <>
-        <Stack className="scp_subject" onClick={()=>{if (!scroll.active) setScrollPos({value: window.scrollY,active:true}); setContent(subject.Body.replace('${description}',subject.Description).replaceAll('\n','<br/>'))}}
+        <Stack className="scp_subject" onClick={()=>{if (!scroll.active) setScrollPos({value: window.scrollY,active:true}); setContent((subject.Description+subject.Body).replaceAll('\n','<br/>'))}}
                 onMouseLeave={()=>{setContent(subject.Description.replaceAll('\n','<br/>'));setBackground("#00000030");
                     if (scroll.active) {window.scrollTo(0,scroll.value); scroll.active = false}
                 }}
