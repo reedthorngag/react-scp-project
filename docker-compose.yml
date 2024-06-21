@@ -44,7 +44,7 @@ services:
     image: dpage/pgadmin4:latest
     restart: always
     ports:
-      - 8080:8080
+      - 8080:80
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@brodycooper.com
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
