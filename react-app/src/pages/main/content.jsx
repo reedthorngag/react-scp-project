@@ -7,7 +7,7 @@ import { Button } from '@mui/base';
 import '../../css/main.css';
 
 
-export default () => {   
+export default (props) => {   
  
     const [subjects, setData] = useState(null);
     const [update, setUpdated] = useState(true);
@@ -15,6 +15,10 @@ export default () => {
 
     useEffect(() => {
         if (update) {
+            if (creatingNew) {
+                createNew(false);
+                return;
+            }
             fetch((process.env.REACT_APP_API_URL || '')+`/api/fetch/next`)
                 .then(response => response.json())
                 .then((data) => {
@@ -27,15 +31,15 @@ export default () => {
             );
             setUpdated(false);
         }
-    }, [update]);
+    }, [update,creatingNew]);
     return (
         <>
         <br/><br/>
         <Stack direction={'column'} spacing={'3vh'} alignItems={'center'} sx={{marginBottom: '10vh'}}>
             <h1>SCP subjects</h1>
             <h3><Button className='button' onClick={() => createNew(true)}>Create new!</Button></h3>
-            {creatingNew && <SCP_Subject subject='new' setUpdated={setUpdated} />}
-            {subjects && subjects.map((subject) => <SCP_Subject subject={subject} setUpdated={setUpdated}/>)}
+            {creatingNew && <SCP_Subject subject='new' setUpdated={setUpdated} profile={props.profile}/>}
+            {subjects && subjects.map((subject) => <SCP_Subject subject={subject} setUpdated={setUpdated} profile={props.profile}/>)}
         </Stack>
         </>
     )

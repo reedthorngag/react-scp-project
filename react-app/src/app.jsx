@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import './css/css.css';
@@ -9,11 +9,13 @@ import Main from './pages/main/main.jsx';
 import UpdateUserID from './pages/update-user-id.jsx';
 
 export default function App() {
+    const [profile, setProfile] = useState(null);
+
     return (
         <>
-        <Nav />
+        <Nav profile={profile} setProfile={setProfile}/>
         <Routes>
-            <Route exact path="/" element={<Main/>}></Route>
+            <Route exact path="/" element={<Main profile={profile}/>}></Route>
             <Route exact path="/login" element={<Test/>}></Route>
             <Route exact path="/updateUserId" element={<UpdateUserID/>}></Route>
         </Routes>

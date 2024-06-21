@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 
 import Content from './content.jsx';
 
-export default () => {
+export default (props) => {
     return (
         <>
-        <Content/>
+        <Content profile={props.profile}/>
         </>
     )
 }

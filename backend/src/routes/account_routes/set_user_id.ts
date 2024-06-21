@@ -40,6 +40,24 @@ const profile:Route = ['/setUserId','POST','required', async (req:any,res:any) =
         });
     }
 
+    await prismaClient.post.updateMany({
+        data: {
+            AuthorID: req.body.UserID
+        },
+        where: {
+            AuthorID: req.auth.userID
+        }
+    });
+
+    await prismaClient.comment.updateMany({
+        data: {
+            AuthorID: req.body.UserID
+        },
+        where: {
+            AuthorID: req.auth.userID
+        }
+    });
+
     await prismaClient.loginInfo.update({
         data: {
             UserID: req.body.UserID

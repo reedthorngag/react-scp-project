@@ -47,11 +47,7 @@ const search_posts:Route = ['/search/posts','GET','none', async (req:any,res:any
             Url:true,
             Body:true,
             Rating:true,
-            Author: {
-                select: {
-                    UserID: true
-                }
-            },
+            AuthorID: true,
             LastEdited:true,
             IsLocked:true,
             PostedAt:true

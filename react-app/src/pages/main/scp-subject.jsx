@@ -6,26 +6,25 @@ import '../../css/main.css';
 
 export default (props) => {
 
-    let newSubject = false;
+    const profile = props.profile;
+
     if (props.subject == 'new') {
-        newSubject = true;
         props.subject = {
             Title: '',
             Class: '',
             Description: '',
-            Body: '\nThe next line is replaced with the description, don\'t change it:\n${Description}\n'
+            Body: '\nThe next line is replaced with the description, don\'t change it:\n${Description}\n',
+            New: true
         }
     }
 
     const [subject, setSubject] = useState(structuredClone(props.subject));
-    const [content, setContent] = useState(subject.Description);
+    const [content, setContent] = useState(subject.Description.replaceAll('\n','<br/>'));
     const [background, setBackground] = useState("#00000030");
     const [scroll, setScrollPos] = useState( {value: window.scrollY,active:false});
-    const [editing, setEditing] = useState(false);
+    const [editing, setEditing] = useState(!!subject.New);
     const [deleted, setDeleted] = useState(false);
-    const [updated, markUpdated] = useState(false);
-
-    if (newSubject) setEditing(true);
+    const [updated, saveEdits] = useState(false);
 
     const [value,triggerUpdate] = useState(0);
     const update = () => triggerUpdate(value + 1);
@@ -44,7 +43,7 @@ export default (props) => {
 
     useEffect(() => {
         if (updated) {
-            fetch((process.env.REACT_APP_API_URL || '')+`/api/posts/${newSubject? 'create' : subject.PostID+'/update'}`,
+            fetch((process.env.REACT_APP_API_URL || '')+`/api/posts/${subject.New? 'create' : subject.PostID+'/update'}`,
                     {
                         method: 'POST',
                         headers:{"Content-Type":"application/json"},
@@ -53,6 +52,8 @@ export default (props) => {
                 .then((res) => {
                     if (res.status != 200 && res.status != 201) {
                         alert("Couldn't update subject!\n(You need to be the author to update a post)\n Status code: "+res.status);
+                    } else {
+                        alert((subject.New ? 'Created' : 'Updated') + ' successfully!');
                     }
                     props.setUpdated(true);
                 });
@@ -73,7 +74,7 @@ export default (props) => {
         setDeleted(true);
     }
 
-    return !editing && !newSubject ? (
+    return !editing && !subject.New ? (
         <>
         <Stack className="scp_subject" onClick={()=>{if (!scroll.active) setScrollPos({value: window.scrollY,active:true}); setContent(subject.Body.replace('${description}',subject.Description).replaceAll('\n','<br/>'))}}
                 onMouseLeave={()=>{setContent(subject.Description.replaceAll('\n','<br/>'));setBackground("#00000030");
@@ -84,12 +85,13 @@ export default (props) => {
             <Grid container direction='row' justifyContent='space-between' alignItems='center'>
                 <h3>{subject.Title}</h3>
                 <Stack direction='row'>
-                    <Button onClick={()=>setEditing(true)}>Edit</Button>
-                    <Button onClick={()=>deleteSubject()} sx={{color:'red'}}>Delete</Button>
+                    {profile && profile.UserID == subject.AuthorID && <><Button onClick={()=>setEditing(true)}>Edit</Button></>}
+                    {profile && (profile.UserID == subject.AuthorID || profile.IsAdmin) && <><Button onClick={()=>deleteSubject()} sx={{color:'red'}}>Delete</Button></>}
                 </Stack>
             </Grid>
             <h4><b>Class: </b>{subject.Class}</h4><br/>
             <p dangerouslySetInnerHTML={{__html: content}}></p>
+            <p><b>Author: </b>{subject.AuthorID}</p>
         </Stack>
         </>
         ) : 
@@ -106,8 +108,8 @@ export default (props) => {
                     </Box>
                 </Stack>
                 <Stack direction='row'>
-                    <Button onClick={()=>saveEdits()}>Save</Button>
-                    <Button onClick={()=>cancelEdit()}>Cancel</Button>
+                    <Button onClick={()=>saveEdits(true)}>Save</Button>
+                    <Button onClick={()=>cancelEdit()} sx={{color:'red'}}>Cancel</Button>
                 </Stack>
             </Grid>
             <h4><b>Class: </b></h4>
@@ -118,7 +120,8 @@ export default (props) => {
             <TextareaAutosize className='textarea' minRows={3} value={subject.Description} onChange={(e)=>updateSubject(e,'Description')}></TextareaAutosize>
             <h4>Body:</h4>
             <TextareaAutosize className='textarea' minRows={5} value={subject.Body} onChange={(e)=>updateSubject(e,'Body')}></TextareaAutosize>
-            <br/><br/>
+            <br/>
+            <p><b>Author: </b>{profile.UserID}</p>
         </Stack>
         </>
         )

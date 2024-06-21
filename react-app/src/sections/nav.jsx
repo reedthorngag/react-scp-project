@@ -6,7 +6,7 @@ import logo from '../imgs/SCP-logo.png';
 import Profile from './profile.jsx';
 
 
-export default () => {
+export default (props) => {
     return (
         <>
         <Stack className='nav' direction={'row'} width={'96vw'} height={'9vh'} padding={'0 2vw 0 1vw'} position={'relative'} sx={{border: '0.1vw solid rgb(140, 130, 115)'}}>
@@ -19,7 +19,7 @@ export default () => {
                         <div style={{fontSize:'3vmin',display:'inline-block', height:'100%', maxHeight:'100%',width:'fit-content',textAlign: 'center',paddingTop:'2vh',paddingLeft:'3%'}}>SCP Foundation</div>
                 </Link>
             </Box>
-            <Profile />
+            <Profile profile={props.profile} setProfile={props.setProfile}/>
         </Stack>
         </>
     )

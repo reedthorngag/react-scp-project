@@ -68,7 +68,7 @@ export default function () {
                     Class: post.class,
                     Body: post.body,
                     CommunityID: (await prismaClient.community.findFirst())!.CommunityID,
-                    AuthorID: (await prismaClient.user.findFirst())!.UserID,
+                    AuthorID: 'Anonymous User',
                     Url: post.image,
                     Type: post.image ? PostType.IMAGE : PostType.TEXT
                 }

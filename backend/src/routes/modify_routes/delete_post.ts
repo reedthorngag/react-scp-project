@@ -5,17 +5,29 @@ import V from 'validator';
 
 
 const exampleRoute:Route = ['/posts/:postID/delete', 'GET', 'required', async (req:any,res:any)=>{
+    
     if (!req.params.postID || !V.isUUID(req.params.postID,'4')) {
         res.status(404).contentType("json").send('{"error":"invalid_post_id"}');
         return;
     }
 
-    const post = await prismaClient.post.delete({
-        where: {
-            PostID: req.params.postID,
-            AuthorID: req.auth.userID
-        }
-    });
+    let post;
+    
+    try {
+        if (req.auth.isAdmin)
+            post = await prismaClient.post.delete({
+                where: {
+                    PostID: req.params.postID
+                }
+            });
+        else
+            post = await prismaClient.post.delete({
+                where: {
+                    PostID: req.params.postID,
+                    AuthorID: req.auth.userID
+                }
+            });
+    } catch (e) {}
 
     if (!post) {
         res.status(404).contentType('json').send('{"error":"post_not_found"}');
